@@ -21,6 +21,9 @@ function Game() {
     this.currentQuestionIndex = -1;
     this.userAnswer = '';
     this.$answerBox = document.getElementById("answerBox");
+    this.$score = document.getElementById("score");
+    this.$chatBox = document.getElementById("chatBox");
+    document.getElementById("total").innerHTML = `/(${this.questions.length})`;
   }
 
   this.start = function() {
@@ -31,38 +34,48 @@ function Game() {
 
   this.incrementScore = function() {
     this.score += 1;
+    this.$score.innerHTML = this.score;
+  }
+
+  this.correctAnswer = function() {
+    return translations[this.questions[this.currentQuestionIndex]];
   }
 
   this.isUserAnswerCorrect = function() {
-    return true;
-    return this.questions[this.currentQuestionIndex] === this.userAnswer;
+    return this.correctAnswer() === this.userAnswer;
   }
 
   this.hasAllQuestionsAsked = function() {
     return (this.questions.length - 1) === this.currentQuestionIndex;
   }
 
+  this.scrollToBottom = function() {
+    this.$chatBox.scrollTop = this.$chatBox.scrollHeight;
+  }
+
+  this.typeAsComputer = function(text) {
+    const computerBubbleTemplate = document.getElementById("computerBubbleTemplate").innerHTML;
+    this.$chatBox.insertAdjacentHTML("beforeend", computerBubbleTemplate);
+
+    const $computerChats = document.querySelectorAll(".bubble.computer");
+    const $lastChat = $computerChats[$computerChats.length - 1];
+
+    $lastChat.innerHTML = text;
+
+    this.scrollToBottom();
+  }
+
   this.typeNextQuestion = function() {
     this.currentQuestionIndex += 1;
-
-    const computerBubbleTemplate = document.getElementById("computerBubbleTemplate").innerHTML;
-    const chatBox = document.getElementById("chatBox");
-    chatBox.insertAdjacentHTML("beforeend", computerBubbleTemplate);
-
-    const $questions = document.querySelectorAll(".bubble.computer");
-    const $lastQuestion = $questions[$questions.length - 1];
-
-    $lastQuestion.innerHTML = this.questions[this.currentQuestionIndex];
-
+    this.typeAsComputer(this.questions[this.currentQuestionIndex]);
     this.$answerBox.focus();
   }
 
-  this.sendUserAnswer = function(answer) {
+  this.typeAsUser = function(answer) {
     this.userAnswer = this.$answerBox.value;
 
     const youBubbleTemplate = document.getElementById("youBubbleTemplate").innerHTML;
-    const chatBox = document.getElementById("chatBox");
-    chatBox.insertAdjacentHTML("beforeend", youBubbleTemplate);
+    this.$chatBox.insertAdjacentHTML("beforeend", youBubbleTemplate);
 
     const $answers = document.querySelectorAll(".bubble.you");
     const $lastAnswer = $answers[$answers.length - 1];
@@ -74,20 +87,26 @@ function Game() {
     } else {
       $lastAnswer.classList.add("wrong");
     }
+
+    this.scrollToBottom();
   }
 
   this.bindInputListener = function() {
     this.$answerBox.addEventListener("keyup", (event) => {
       if (event.keyCode === 13) {
         event.preventDefault();
-        this.sendUserAnswer(this.$answerBox.value);
+        this.typeAsUser(this.$answerBox.value);
         this.$answerBox.value = '';
     
         if (this.isUserAnswerCorrect()) {
-          this.typeNextQuestion();
-
+          this.incrementScore();
+          if (this.hasAllQuestionsAsked()) {
+            this.typeAsComputer(`Congratulations. You have answered all questions correct`);
+          } else {
+            this.typeNextQuestion();
+          }
         } else {
-
+          this.typeAsComputer(`Correct Answer: "${this.correctAnswer()}". Game Over. Good luck next time`);
         }
       }
     });

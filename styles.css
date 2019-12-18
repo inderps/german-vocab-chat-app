@@ -31,6 +31,10 @@ body {
   font-size: 1.5rem;
 }
 
+#score {
+  margin-left: 10px;
+}
+
 .scorecard {
   position: fixed;
   width: 100%;
