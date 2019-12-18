@@ -50,12 +50,12 @@ function shuffle(a) {
 function Game() {
 
   this.init = function() {
-    this.score = 0;
+    this.wrongAnswerCount = 0;
     this.questions = shuffle(Object.keys(translations));
     this.currentQuestionIndex = -1;
     this.userAnswer = '';
     this.$answerBox = document.getElementById("answerBox");
-    this.$score = document.getElementById("score");
+    this.$words = document.getElementById("words");
     this.$chatBox = document.getElementById("chatBox");
     document.getElementById("total").innerHTML = `/(${this.questions.length})`;
   }
@@ -66,9 +66,9 @@ function Game() {
     this.typeNextQuestion();
   }
 
-  this.incrementScore = function() {
-    this.score += 1;
-    this.$score.innerHTML = this.score;
+  this.incrementQuestionIndex = function() {
+    this.currentQuestionIndex += 1;
+    this.$words.innerHTML = this.currentQuestionIndex + 1;
   }
 
   this.correctAnswer = function() {
@@ -100,7 +100,7 @@ function Game() {
   }
 
   this.typeNextQuestion = function() {
-    this.currentQuestionIndex += 1;
+    this.incrementQuestionIndex();
     this.typeAsComputer(this.questions[this.currentQuestionIndex]);
     this.$answerBox.focus();
   }
@@ -133,14 +133,14 @@ function Game() {
         this.$answerBox.value = '';
     
         if (this.isUserAnswerCorrect()) {
-          this.incrementScore();
           if (this.hasAllQuestionsAsked()) {
-            this.typeAsComputer(`Congratulations. You have answered all questions correct`);
+            this.typeAsComputer(`Congratulations. The quiz is over and your score is ${this.questions.length - this.wrongAnswerCount}/${this.questions.length}`);
           } else {
             this.typeNextQuestion();
           }
         } else {
-          this.typeAsComputer(`Correct Answer: "${this.correctAnswer()}". Game Over. Good luck next time`);
+          this.wrongAnswerCount += 1;
+          this.typeAsComputer(`Correct Answer: "${this.correctAnswer()}". Please type again`);
         }
       }
     });
