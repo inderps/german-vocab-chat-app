@@ -42,7 +42,7 @@ function Game() {
   }
 
   this.isUserAnswerCorrect = function() {
-    return this.correctAnswer() === this.userAnswer;
+    return this.correctAnswer().toLowerCase() === this.userAnswer.toLowerCase();
   }
 
   this.hasAllQuestionsAsked = function() {
