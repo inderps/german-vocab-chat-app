@@ -20,15 +20,15 @@ body {
   bottom: 0;
   width: 100%;
   padding: 15px;
-  height: 60px;
+  display: flex;
   box-sizing: border-box;
 }
 
 .answer-box {
-  width: 100%;
   border: 0;
-  height: 100%;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  flex-grow: 1;
+  height: 30px;
 }
 
 #score {
@@ -55,10 +55,11 @@ body {
 }
 
 .bubble {
-  width: 60%;
+  width: 50%;
   margin: 30px auto;
   border-radius: 15px;
-  padding: 20px;
+  font-size: 0.8rem;
+  padding: 10px;
   text-align: center;
   position: relative;
 }
