@@ -10,17 +10,19 @@ function getQueryStringValue (key) {
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }
 
-function Game(translations) {
+function Game(type) {
 
   this.init = function() {
+    this.translations = window[type]
     this.wrongAnswerCount = 0;
-    this.questions = shuffle(Object.keys(translations));
+    this.questions = shuffle(Object.keys(this.translations));
     this.currentQuestionIndex = -1;
     this.userAnswer = '';
     this.$answerBox = document.getElementById("answerBox");
     this.$questionNum = document.getElementById("questionNum");
     this.$chatBox = document.getElementById("chatBox");
     document.getElementById("total").innerHTML = `/(${this.questions.length})`;
+    document.getElementById("type").innerHTML = type;
   }
 
   this.start = function() {
@@ -35,7 +37,7 @@ function Game(translations) {
   }
 
   this.correctAnswer = function() {
-    return translations[this.questions[this.currentQuestionIndex]];
+    return this.translations[this.questions[this.currentQuestionIndex]];
   }
 
   this.isUserAnswerCorrect = function() {
@@ -112,13 +114,7 @@ function Game(translations) {
 
 document.addEventListener("DOMContentLoaded", () => {
   
-  let translation = window.nouns
-
-  if (getQueryStringValue('type')) {
-    translation = window[getQueryStringValue('type')]
-  }
-
-  const game = new Game(translation);
+  const game = new Game(getQueryStringValue('type') || 'nouns');
 
   game.start();
 });
