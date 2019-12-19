@@ -38,6 +38,8 @@ window.nouns = {
   "Doctor": "der Artz",
   "Profession": "der Beruf",
   "Monkey": "der Affe",
+  "Pets": "Das Haustiere",
+  "Invitation": "Die Einladung",
   "Father": "der Vater"
 }
 

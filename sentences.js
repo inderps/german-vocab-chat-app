@@ -9,4 +9,12 @@ window.sentences = {
   "I'm fine thanks": "Mir geht es gut, danke",
   "I'm eating a apple": "Ich esse einen Apfel",
   "I'm drinking a glass of wine": "Ich trink ein Glas Wein",
+  "I'm dancing": "Ich tanze",
+  "I like dancing very much": "Ich mag tanzen sehr gerne",
+  "How old are you?": "Wie alt bist du?",
+  "Do you have kids?": "Hast du kinder?",
+  "How many children do you have?": "Wie viele kinder hast du?",
+  "Is your house big or small?": "Ist dein Haus gross oder klein?",
+  "Can you come to the party": "Kannst du auf das Fest kommen?",
+  "What are you doing?": "Was machen sie?",
 }
