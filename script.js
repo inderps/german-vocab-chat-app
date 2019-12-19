@@ -1,44 +1,3 @@
-const translations = {
-  'Page': 'die Seite',
-  'Foot': 'der Fuss',
-  'Road': 'der Weg',
-  'Bake': 'backen',
-  'Word': 'das Wort',
-  'Love': 'Lieben',
-  'Voice': 'die Stimme',
-  'To try': 'Versuchen',
-  'Ant': 'die Ameise',
-  'Banana': 'die Banane',
-  'Boat': 'das Boot',
-  'Bus': 'der Bus',
-  'Roof': 'das Dach',
-  'Strawberry': 'die Erdbeere',
-  'Window': 'das Fenster',
-  'Factory': 'die Fabrik',
-  'Island': 'die Insel',
-  'Jacket': 'die Jacke',
-  'Cook': 'der Koch',
-  'Cheese': 'der Kase',
-  'King': 'der Kong',
-  'Teacher': 'der Lehrer',
-  'Lamb': 'das Lamm',
-  'Moon': 'der Mond',
-  'Mouse': 'die Maus',
-  'Night': 'die Nacht',
-  'Side': 'der Nebel',
-  'Nose': 'die Nase',
-  'Fruit': 'das Obst',
-  'Granda': 'der Opa',
-  'Horse': 'das Pferd',
-  'Heart': 'das Herz',
-  'Tooth': 'der Zahn',
-  'Dog': 'der Hund',
-  'House': 'das Haus',
-  'Head': 'Der Kopf',
-  'Monkey': 'der Affe',
-  'Father': 'der Vater'
-}
-
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -47,7 +6,11 @@ function shuffle(a) {
     return a;
 }
 
-function Game() {
+function getQueryStringValue (key) {  
+  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+}
+
+function Game(translations) {
 
   this.init = function() {
     this.wrongAnswerCount = 0;
@@ -148,7 +111,14 @@ function Game() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const game = new Game();
+  
+  let translation = window.words
+
+  if (getQueryStringValue('type') == 'sentences') {
+    translation = window.sentences
+  }
+
+  const game = new Game(translation);
 
   game.start();
 });
