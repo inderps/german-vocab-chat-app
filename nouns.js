@@ -1,4 +1,4 @@
-window.words = {
+window.nouns = {
   "Page": "die Seite",
   "Foot": "der Fuss",
   "Road": "der Weg",

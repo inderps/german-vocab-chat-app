@@ -18,7 +18,7 @@ function Game(translations) {
     this.currentQuestionIndex = -1;
     this.userAnswer = '';
     this.$answerBox = document.getElementById("answerBox");
-    this.$words = document.getElementById("words");
+    this.$questionNum = document.getElementById("questionNum");
     this.$chatBox = document.getElementById("chatBox");
     document.getElementById("total").innerHTML = `/(${this.questions.length})`;
   }
@@ -31,7 +31,7 @@ function Game(translations) {
 
   this.incrementQuestionIndex = function() {
     this.currentQuestionIndex += 1;
-    this.$words.innerHTML = this.currentQuestionIndex + 1;
+    this.$questionNum.innerHTML = this.currentQuestionIndex + 1;
   }
 
   this.correctAnswer = function() {
@@ -112,7 +112,7 @@ function Game(translations) {
 
 document.addEventListener("DOMContentLoaded", () => {
   
-  let translation = window.words
+  let translation = window.nouns
 
   if (getQueryStringValue('type')) {
     translation = window[getQueryStringValue('type')]
