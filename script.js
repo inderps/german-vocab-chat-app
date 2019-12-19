@@ -114,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
   let translation = window.words
 
-  if (getQueryStringValue('type') == 'sentences') {
-    translation = window.sentences
+  if (getQueryStringValue('type')) {
+    translation = window[getQueryStringValue('type')]
   }
 
   const game = new Game(translation);
