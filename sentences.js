@@ -16,5 +16,7 @@ window.sentences = {
   "How many children do you have?": "Wie viele kinder hast du?",
   "Is your house big or small?": "Ist dein Haus gross oder klein?",
   "Can you come to the party": "Kannst du auf das Fest kommen?",
+  "which languages do you speak?": "Welche Sprachen sprechen Sie?",
+  "It's nice to meet you": "Es freut mich sie kennenzulernen",
   "What are you doing?": "Was machen sie?",
 }
