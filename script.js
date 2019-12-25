@@ -33,6 +33,7 @@ function Game(type) {
 
   this.incrementQuestionIndex = function() {
     this.currentQuestionIndex += 1;
+    this.alreadyAnsweredThisQuestionAsWrong = false;
     this.$questionNum.innerHTML = this.currentQuestionIndex + 1;
   }
 
@@ -104,7 +105,12 @@ function Game(type) {
             this.typeNextQuestion();
           }
         } else {
-          this.wrongAnswerCount += 1;
+
+          if (!this.alreadyAnsweredThisQuestionAsWrong) {
+            this.wrongAnswerCount += 1;
+            this.alreadyAnsweredThisQuestionAsWrong = true;
+          }
+
           this.typeAsComputer(`Correct Answer: "${this.correctAnswer()}". Please type again`);
         }
       }

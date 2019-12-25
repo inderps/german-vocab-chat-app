@@ -1,5 +1,5 @@
 window.pronouns = {
   "me": "Mir",
-  "somebody": "Jemanden";
+  "somebody": "Jemanden",
   "what": "Was",
 }
