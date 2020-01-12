@@ -4,5 +4,6 @@ window.adjectives = {
   "angry": "verârgert",
   "schocked": "shockiert",
   "many": "viele",
+  "intelligent": "wichtig",
   "married": "verheiratet",
 }

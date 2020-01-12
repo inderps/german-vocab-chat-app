@@ -3,4 +3,6 @@ window.adverbs = {
   "also": "auch",
   "pleasure (like)": "gerne",
   "very": "sehr",
+  "why": "warum",
+  "just / only": "nur",
 }

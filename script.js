@@ -42,7 +42,7 @@ function Game(type) {
   }
 
   this.isUserAnswerCorrect = function() {
-    return this.correctAnswer().toLowerCase() === this.userAnswer.toLowerCase();
+    return this.correctAnswer().trim().toLowerCase() === this.userAnswer.trim().toLowerCase();
   }
 
   this.hasAllQuestionsAsked = function() {
@@ -91,28 +91,32 @@ function Game(type) {
     this.scrollToBottom();
   }
 
+  this.verifyAnswer = function() {
+    this.typeAsUser(this.$answerBox.value);
+    this.$answerBox.value = '';
+
+    if (this.isUserAnswerCorrect()) {
+      if (this.hasAllQuestionsAsked()) {
+        this.typeAsComputer(`Congratulations. The quiz is over and your score is ${this.questions.length - this.wrongAnswerCount}/${this.questions.length}`);
+      } else {
+        this.typeNextQuestion();
+      }
+    } else {
+
+      if (!this.alreadyAnsweredThisQuestionAsWrong) {
+        this.wrongAnswerCount += 1;
+        this.alreadyAnsweredThisQuestionAsWrong = true;
+      }
+
+      this.typeAsComputer(`Correct Answer: "${this.correctAnswer()}". Please type again`);
+    }
+  }
+
   this.bindInputListener = function() {
     this.$answerBox.addEventListener("keyup", (event) => {
       if (event.keyCode === 13) {
         event.preventDefault();
-        this.typeAsUser(this.$answerBox.value);
-        this.$answerBox.value = '';
-    
-        if (this.isUserAnswerCorrect()) {
-          if (this.hasAllQuestionsAsked()) {
-            this.typeAsComputer(`Congratulations. The quiz is over and your score is ${this.questions.length - this.wrongAnswerCount}/${this.questions.length}`);
-          } else {
-            this.typeNextQuestion();
-          }
-        } else {
-
-          if (!this.alreadyAnsweredThisQuestionAsWrong) {
-            this.wrongAnswerCount += 1;
-            this.alreadyAnsweredThisQuestionAsWrong = true;
-          }
-
-          this.typeAsComputer(`Correct Answer: "${this.correctAnswer()}". Please type again`);
-        }
+        this.verifyAnswer();
       }
     });
   }

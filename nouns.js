@@ -38,6 +38,7 @@ window.nouns = {
   "Monkey": "der Affe",
   "Pets": "Das Haustiere",
   "Invitation": "Die Einladung",
+  "surprise": "die überraschung",
   "Father": "der Vater"
 }
 
